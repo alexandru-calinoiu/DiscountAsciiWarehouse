@@ -1,5 +1,6 @@
 package alexandrucalinoiu.com.discountasciiwarehouse.di.components;
 
+import android.app.SearchManager;
 import android.content.Context;
 
 import javax.inject.Singleton;
@@ -12,4 +13,6 @@ import dagger.Component;
 public interface ApplicationComponent {
 
   Context context();
+
+  SearchManager searchManager();
 }

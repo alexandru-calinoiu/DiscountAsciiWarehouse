@@ -23,3 +23,18 @@ As well as submitting the code, can you also please include:
 - notes on technical decisions you made, and the pros / cons of that approach
 - recommendations that you would want to see followed up if this were the beginning of a long-term project.  What kinds of things do you look for in the code, technology choices, team practices etc. that can help to make a project successful?
 
+# Notes on the implementation
+
+In order to build and run a simple `./gradlew build` in the project root should do the trick
+
+The overall arhitecture is heavily inspired by http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html I borrow most of the 
+naming from there. 
+
+I've tried to implement this clean architecture in the past on Android but I think that this time around with the help of data binding I am getting really
+close.
+
+There a couple of thinks that need to be done if this where a real project:
+- split each layer in it's own android module, data (caching?!) and domain project should not need reference to the android framework
+- add some more test coverage
+- add authorization
+- add in app purchase support

@@ -21,12 +21,17 @@ public class AsciiViewModel {
   }
 
   public Spanned getCallToAction() {
-    String result = "<b><big>" + "Buy now!" + "</big></b>" + "<br />";
+    String actualCallToAction = canBuy() ? "Buy now!" : "Out of stock!";
+    String result = "<b><big>" + actualCallToAction + "</big></b>" + "<br />";
 
     if (ascii.getStock() == 1) {
       result +=  "<small>" + "(only 1 more in stock" + "</small>" + "<br />";
     }
 
     return Html.fromHtml(result);
+  }
+
+  public boolean canBuy() {
+    return !(ascii.getStock() == 0);
   }
 }

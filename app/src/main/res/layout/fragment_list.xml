@@ -18,6 +18,12 @@
         tools:context=".ui.fragment.ListActivityFragment"
         tools:showIn="@layout/activity_list">
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
         <RelativeLayout
             android:id="@+id/progress_layout"
             android:layout_width="match_parent"

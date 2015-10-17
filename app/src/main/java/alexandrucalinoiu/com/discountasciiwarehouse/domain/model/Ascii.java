@@ -1,25 +1,43 @@
 package alexandrucalinoiu.com.discountasciiwarehouse.domain.model;
 
 public class Ascii {
-  private String type;
-  private String id;
+  private String face;
+  private Integer size;
+  private Integer price;
+  private Integer stock;
 
   public Ascii() {
   }
 
-  public String getType() {
-    return type;
+  public String getFace() {
+    return face;
   }
 
-  public void setType(String type) {
-    this.type = type;
+  public void setFace(String face) {
+    this.face = face;
   }
 
-  public String getId() {
-    return id;
+  public Integer getSize() {
+    return size;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public void setSize(Integer size) {
+    this.size = size;
+  }
+
+  public Integer getPrice() {
+    return price;
+  }
+
+  public void setPrice(Integer price) {
+    this.price = price;
+  }
+
+  public Integer getStock() {
+    return stock;
+  }
+
+  public void setStock(Integer stock) {
+    this.stock = stock;
   }
 }

@@ -2,6 +2,7 @@ package alexandrucalinoiu.com.discountasciiwarehouse.presenter;
 
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.SearchView;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import alexandrucalinoiu.com.discountasciiwarehouse.ui.viewmodel.ListActivityFra
 public class ListPresenter implements SearchView.OnQueryTextListener, Presenter {
   private final Search search;
   private final ListActivityFragmentViewModel listActivityFragmentViewModel;
+  private ListActivityView listActivityView;
 
   @Inject
   public ListPresenter(Search search, ListActivityFragmentViewModel listActivityFragmentViewModel) {
@@ -26,8 +28,11 @@ public class ListPresenter implements SearchView.OnQueryTextListener, Presenter 
     this.listActivityFragmentViewModel = listActivityFragmentViewModel;
   }
 
-  public void setView(@NonNull ListActivityView view) {
-    setupBinding(view);
+  public void setListActivityView(@NonNull ListActivityView listActivityView) {
+    this.listActivityView = listActivityView;
+    setupBinding(listActivityView);
+
+    onQueryTextSubmit("");
   }
 
   @Override
@@ -63,6 +68,14 @@ public class ListPresenter implements SearchView.OnQueryTextListener, Presenter 
     this.listActivityFragmentViewModel.setProgressGone();
   }
 
+  private void showError() {
+    Snackbar.make(listActivityView.getView(), "Search failed, sorry...", Snackbar.LENGTH_LONG).show();
+  }
+
+  private void setAsciis(List<Ascii> asciis) {
+    listActivityView.setAsciis(asciis);
+  }
+
   private void setupBinding(ListActivityView view) {
     FragmentListBinding binding = DataBindingUtil.bind(view.getView());
     binding.setViewModel(listActivityFragmentViewModel);
@@ -77,10 +90,13 @@ public class ListPresenter implements SearchView.OnQueryTextListener, Presenter 
     @Override
     public void onError(Throwable e) {
       ListPresenter.this.hideLoading();
+      ListPresenter.this.showError();
     }
 
     @Override
-    public void onNext(List<Ascii> ascii) {
+    public void onNext(List<Ascii> asciis) {
+      ListPresenter.this.hideLoading();
+      ListPresenter.this.setAsciis(asciis);
     }
   }
 }

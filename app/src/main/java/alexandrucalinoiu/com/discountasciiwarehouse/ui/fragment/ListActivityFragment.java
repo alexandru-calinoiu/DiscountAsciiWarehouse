@@ -1,10 +1,8 @@
 package alexandrucalinoiu.com.discountasciiwarehouse.ui.fragment;
 
 import android.app.SearchManager;
-import android.content.Context;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,13 +16,12 @@ import alexandrucalinoiu.com.discountasciiwarehouse.R;
 import alexandrucalinoiu.com.discountasciiwarehouse.di.HasComponent;
 import alexandrucalinoiu.com.discountasciiwarehouse.di.components.ListActivityComponent;
 import alexandrucalinoiu.com.discountasciiwarehouse.presenter.ListPresenter;
-import alexandrucalinoiu.com.discountasciiwarehouse.ui.activity.BaseActivity;
-import alexandrucalinoiu.com.discountasciiwarehouse.ui.activity.ListActivity;
+import alexandrucalinoiu.com.discountasciiwarehouse.ui.ListActivityView;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class ListActivityFragment extends Fragment {
+public class ListActivityFragment extends Fragment implements ListActivityView {
 
   @Inject
   public ListPresenter listPresenter;
@@ -47,6 +44,7 @@ public class ListActivityFragment extends Fragment {
     super.onActivityCreated(savedInstanceState);
 
     ((HasComponent<ListActivityComponent>)getActivity()).getComponent().inject(this);
+    this.listPresenter.setView(this);
   }
 
   @Override
@@ -61,6 +59,24 @@ public class ListActivityFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     return inflater.inflate(R.layout.fragment_list, container, false);
+  }
+
+  @Override
+  public void onPause() {
+    super.onPause();
+    listPresenter.pause();
+  }
+
+  @Override
+  public void onResume() {
+    super.onResume();
+    listPresenter.resume();
+  }
+
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+    listPresenter.destroy();
   }
 
   private void setupSearchView(Menu menu) {

@@ -4,7 +4,7 @@ import android.app.Application;
 
 import alexandrucalinoiu.com.discountasciiwarehouse.di.components.ApplicationComponent;
 import alexandrucalinoiu.com.discountasciiwarehouse.di.components.DaggerApplicationComponent;
-import alexandrucalinoiu.com.discountasciiwarehouse.di.modules.ApplicantionModule;
+import alexandrucalinoiu.com.discountasciiwarehouse.di.modules.ApplicationModule;
 
 public class DiscountApplication extends Application {
 
@@ -18,7 +18,7 @@ public class DiscountApplication extends Application {
 
   private void buildComponent() {
     applicationComponent = DaggerApplicationComponent.builder()
-        .applicantionModule(new ApplicantionModule(this))
+        .applicationModule(new ApplicationModule(this))
         .build();
   }
 

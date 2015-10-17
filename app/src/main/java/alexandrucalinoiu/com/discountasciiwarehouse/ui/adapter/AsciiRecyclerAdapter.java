@@ -1,5 +1,6 @@
 package alexandrucalinoiu.com.discountasciiwarehouse.ui.adapter;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -47,14 +48,16 @@ public class AsciiRecyclerAdapter extends RecyclerView.Adapter<AsciiRecyclerAdap
 
   final static class AsciiViewHolder extends RecyclerView.ViewHolder {
     private final AsciiLayoutBinding asciiLayoutBinding;
+    private final Context context;
 
     public AsciiViewHolder(View itemView) {
       super(itemView);
+      context = itemView.getContext();
       asciiLayoutBinding = DataBindingUtil.bind(itemView);
     }
 
     public void bind(Ascii ascii) {
-      asciiLayoutBinding.setViewModel(new AsciiViewModel(ascii));
+      asciiLayoutBinding.setViewModel(new AsciiViewModel(context, ascii));
     }
   }
 }

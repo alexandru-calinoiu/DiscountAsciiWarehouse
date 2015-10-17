@@ -125,7 +125,6 @@ public class ListActivityFragment extends Fragment implements ListActivityView {
     layoutManager = new GridLayoutManager(context, 2);
     recyclerView.setLayoutManager(layoutManager);
     recyclerView.setItemAnimator(new DefaultItemAnimator());
-
   }
 
   private void addOnScrollListener() {

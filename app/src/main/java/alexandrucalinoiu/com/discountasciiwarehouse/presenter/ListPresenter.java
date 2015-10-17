@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import alexandrucalinoiu.com.discountasciiwarehouse.R;
 import alexandrucalinoiu.com.discountasciiwarehouse.databinding.FragmentListBinding;
 import alexandrucalinoiu.com.discountasciiwarehouse.di.PerActivity;
 import alexandrucalinoiu.com.discountasciiwarehouse.domain.interaction.Search;
@@ -78,14 +79,19 @@ public class ListPresenter implements SearchView.OnQueryTextListener, Presenter,
   }
 
   private void showError() {
-    Snackbar.make(listActivityView.getView(), "Search failed, sorry...", Snackbar.LENGTH_LONG).show();
+    Snackbar.make(listActivityView.getView(), R.string.search_failed, Snackbar.LENGTH_LONG).show();
   }
 
   private void setAsciis(List<Ascii> asciis) {
     if (isLoadingMore) {
       listActivityView.addAsciis(asciis);
     } else {
-      listActivityView.setAsciis(asciis);
+      if (asciis.isEmpty()) {
+        Snackbar.make(listActivityView.getView(), R.string.search_no_results, Snackbar.LENGTH_LONG).show();
+      }
+      else {
+        listActivityView.setAsciis(asciis);
+      }
     }
   }
 

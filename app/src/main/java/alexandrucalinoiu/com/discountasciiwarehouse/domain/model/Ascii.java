@@ -2,7 +2,6 @@ package alexandrucalinoiu.com.discountasciiwarehouse.domain.model;
 
 public class Ascii {
   private String face;
-  private Integer size;
   private Integer price;
   private Integer stock;
 
@@ -15,14 +14,6 @@ public class Ascii {
 
   public void setFace(String face) {
     this.face = face;
-  }
-
-  public Integer getSize() {
-    return size;
-  }
-
-  public void setSize(Integer size) {
-    this.size = size;
   }
 
   public Integer getPrice() {

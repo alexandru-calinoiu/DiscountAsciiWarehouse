@@ -6,5 +6,4 @@ public interface Presenter {
   void pause();
 
   void destroy();
-
 }

@@ -6,6 +6,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import alexandrucalinoiu.com.discountasciiwarehouse.domain.interaction.Search;
+import alexandrucalinoiu.com.discountasciiwarehouse.domain.model.QueryParams;
 import alexandrucalinoiu.com.discountasciiwarehouse.ui.viewmodel.ListActivityFragmentViewModel;
 import rx.Subscriber;
 
@@ -33,6 +34,6 @@ public class ListPresenterTest extends AndroidTestCase {
     subject.onQueryTextSubmit("42");
 
     verify(listActivityFragmentViewModel).setProgressVisible();
-    verify(mockSearch).execute(eq("42"), any(Subscriber.class));
+    verify(mockSearch).execute(any(QueryParams.class), any(Subscriber.class));
   }
 }

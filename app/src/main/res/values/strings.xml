@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">Discount Ascii Warehouse</string>
     <string name="action_settings">Settings</string>
+
     <string name="search_title">Search</string>
-    <string name="search_hint">Search here ...</string>
+    <string name="search_hint">Search here…</string>
+    <string name="search_failed">Search failed, sorry…</string>
+    <string name="search_no_results">We did not find a ascii with you search term.</string>
+
+    <string name="button_buy">Buy now!</string>
+    <string name="button_out">Out of stock!</string>
+    <string name="button_call_to_action">(only 1 more in stock)</string>
 </resources>

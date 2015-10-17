@@ -25,6 +25,8 @@ public class SearchUseCase implements Search {
 
   @SuppressWarnings("unchecked")
   public void execute(QueryParams params, Subscriber subscriber) {
+    unsubscribe();
+
     subscription = asciiRepository.search(params)
         .subscribeOn(executionThread.getScheduler())
         .observeOn(postExecutionThread.getScheduler())

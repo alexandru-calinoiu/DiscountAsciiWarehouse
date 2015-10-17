@@ -36,5 +36,6 @@ close.
 There a couple of thinks that need to be done if this where a real project:
 - split each layer in it's own android module, data (caching?!) and domain project should not need reference to the android framework
 - add some more test coverage
+- update to retrofit 2
 - add authorization
 - add in app purchase support

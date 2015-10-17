@@ -25,8 +25,8 @@ public class AsciiRecyclerAdapter extends RecyclerView.Adapter<AsciiRecyclerAdap
     View itemView = LayoutInflater.
         from(parent.getContext()).
         inflate(R.layout.ascii_layout, parent, false);
-    return new AsciiViewHolder(itemView);
 
+    return new AsciiViewHolder(itemView);
   }
 
   @Override
@@ -40,9 +40,12 @@ public class AsciiRecyclerAdapter extends RecyclerView.Adapter<AsciiRecyclerAdap
     return asciis.size();
   }
 
+  public void addAll(List<Ascii> asciis) {
+    this.asciis.addAll(asciis);
+    notifyDataSetChanged();
+  }
+
   final static class AsciiViewHolder extends RecyclerView.ViewHolder {
-
-
     private final AsciiLayoutBinding asciiLayoutBinding;
 
     public AsciiViewHolder(View itemView) {

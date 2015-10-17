@@ -9,10 +9,12 @@ import javax.inject.Singleton;
 
 import alexandrucalinoiu.com.discountasciiwarehouse.data.converter.AsciiResponseConverter;
 import alexandrucalinoiu.com.discountasciiwarehouse.domain.model.Ascii;
+import alexandrucalinoiu.com.discountasciiwarehouse.domain.model.QueryParams;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 import retrofit.http.GET;
 import retrofit.http.Headers;
+import retrofit.http.Query;
 import rx.Observable;
 
 @Singleton
@@ -25,7 +27,7 @@ public class RetroAsciiRepository implements AsciiRepository {
         "Content-Type: application/json"
     })
     @GET("/search.json")
-    Observable<List<Ascii>> search();
+    Observable<List<Ascii>> search(@Query("limit") int limit, @Query("skip") int skip, @Query("q") String query);
   }
 
   @Inject
@@ -42,7 +44,7 @@ public class RetroAsciiRepository implements AsciiRepository {
     asciiService = retrofit.create(AsciiService.class);
   }
 
-  public Observable<List<Ascii>> search() {
-    return asciiService.search();
+  public Observable<List<Ascii>> search(QueryParams params) {
+    return asciiService.search(params.getLimit(), params.getSkip(), params.getQuery());
   }
 }

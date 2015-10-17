@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import alexandrucalinoiu.com.discountasciiwarehouse.data.repository.AsciiRepository;
 import alexandrucalinoiu.com.discountasciiwarehouse.domain.executor.ExecutionThread;
 import alexandrucalinoiu.com.discountasciiwarehouse.domain.executor.PostExecutionThread;
+import alexandrucalinoiu.com.discountasciiwarehouse.domain.model.QueryParams;
 import rx.Subscriber;
 import rx.Subscription;
 
@@ -22,8 +23,9 @@ public class SearchUseCase implements Search {
     this.asciiRepository = asciiRepository;
   }
 
-  public void execute(String query, Subscriber subscriber) {
-    subscription = asciiRepository.search()
+  @SuppressWarnings("unchecked")
+  public void execute(QueryParams params, Subscriber subscriber) {
+    subscription = asciiRepository.search(params)
         .subscribeOn(executionThread.getScheduler())
         .observeOn(postExecutionThread.getScheduler())
         .subscribe(subscriber);

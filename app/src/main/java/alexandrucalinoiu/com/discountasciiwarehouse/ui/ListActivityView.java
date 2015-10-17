@@ -10,4 +10,6 @@ public interface ListActivityView {
   View getView();
 
   void setAsciis(List<Ascii> asciis);
+
+  void addAsciis(List<Ascii> asciis);
 }

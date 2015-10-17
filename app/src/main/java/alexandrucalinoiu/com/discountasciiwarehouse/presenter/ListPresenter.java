@@ -13,14 +13,18 @@ import alexandrucalinoiu.com.discountasciiwarehouse.databinding.FragmentListBind
 import alexandrucalinoiu.com.discountasciiwarehouse.di.PerActivity;
 import alexandrucalinoiu.com.discountasciiwarehouse.domain.interaction.Search;
 import alexandrucalinoiu.com.discountasciiwarehouse.domain.model.Ascii;
+import alexandrucalinoiu.com.discountasciiwarehouse.domain.model.QueryParams;
+import alexandrucalinoiu.com.discountasciiwarehouse.ui.EndlessRecyclerOnScrollListener;
 import alexandrucalinoiu.com.discountasciiwarehouse.ui.ListActivityView;
 import alexandrucalinoiu.com.discountasciiwarehouse.ui.viewmodel.ListActivityFragmentViewModel;
 
 @PerActivity
-public class ListPresenter implements SearchView.OnQueryTextListener, Presenter {
+public class ListPresenter implements SearchView.OnQueryTextListener, Presenter, EndlessRecyclerOnScrollListener.EndOfLineListener {
   private final Search search;
   private final ListActivityFragmentViewModel listActivityFragmentViewModel;
   private ListActivityView listActivityView;
+  private boolean isLoadingMore = false;
+  private String lastQueryString;
 
   @Inject
   public ListPresenter(Search search, ListActivityFragmentViewModel listActivityFragmentViewModel) {
@@ -37,8 +41,7 @@ public class ListPresenter implements SearchView.OnQueryTextListener, Presenter 
 
   @Override
   public boolean onQueryTextSubmit(String query) {
-    showLoading();
-    search.execute(query, new SearchSubscriber());
+    executeSearch(query);
     return false;
   }
 
@@ -60,6 +63,12 @@ public class ListPresenter implements SearchView.OnQueryTextListener, Presenter 
     search.unsubscribe();
   }
 
+  @Override
+  public void loadMore(int currentPage) {
+    isLoadingMore = true;
+    executeSearch(QueryParams.LIMIT, QueryParams.LIMIT * currentPage, lastQueryString);
+  }
+
   private void showLoading() {
     this.listActivityFragmentViewModel.setProgressVisible();
   }
@@ -73,12 +82,27 @@ public class ListPresenter implements SearchView.OnQueryTextListener, Presenter 
   }
 
   private void setAsciis(List<Ascii> asciis) {
-    listActivityView.setAsciis(asciis);
+    if (isLoadingMore) {
+      listActivityView.addAsciis(asciis);
+    } else {
+      listActivityView.setAsciis(asciis);
+    }
   }
 
   private void setupBinding(ListActivityView view) {
     FragmentListBinding binding = DataBindingUtil.bind(view.getView());
     binding.setViewModel(listActivityFragmentViewModel);
+  }
+
+  private void executeSearch(String query) {
+    isLoadingMore = false;
+    lastQueryString = query;
+    executeSearch(QueryParams.LIMIT, 0, query);
+  }
+
+  private void executeSearch(int limit, int skip, String query) {
+    showLoading();
+    search.execute(new QueryParams(limit, skip, query), new SearchSubscriber());
   }
 
   private final class SearchSubscriber extends rx.Subscriber<List<Ascii>> {
